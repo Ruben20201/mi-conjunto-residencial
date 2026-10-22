@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletín Informativo - Mi Conjunto</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .nav-back { display: inline-block; margin-bottom: 15px; color: #3498db; text-decoration: none; font-weight: bold; }
+        .card-boletin { background: #fff; border-left: 5px solid #3498db; padding: 15px 20px; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card-boletin h3 { margin-top: 0; color: #2c3e50; }
+        .fecha { font-size: 12px; color: #7f8c8d; margin-bottom: 10px; }
+        .contenido { color: #333; line-height: 1.6; }
+        .no-results { color: #7f8c8d; text-align: center; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="{% url 'inicio' %}" class="nav-back">⬅ Volver al Inicio</a>
+    <h1>📢 Boletín Informativo y Comunicados</h1>
+    <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">Entérate de las últimas noticias y avisos de la administración.</p>
+
+    {% if boletines %}
+        {% for b in boletines %}
+            <div class="card-boletin">
+                <h3>{{ b.titulo }}</h3>
+                <div class="fecha">Publicado el: {{ b.fecha_publicacion|date:"d/m/Y H:i" }}</div>
+                <div class="contenido">{{ b.contenido|linebreaks }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-results">📭 No hay boletines informativos publicados por el momento.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

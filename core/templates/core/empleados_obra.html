@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal de Obra - Mi Conjunto</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .nav-back { display: inline-block; margin-bottom: 15px; color: #3498db; text-decoration: none; font-weight: bold; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        button { padding: 12px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #2980b9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #2c3e50; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .badge-activo { background: #2ecc71; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .badge-inactivo { background: #e74c3c; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .no-results { color: #e74c3c; text-align: center; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="{% url 'inicio' %}" class="nav-back">⬅ Volver al Inicio</a>
+    <h1>👷‍♂️ Control de Personal de Obra</h1>
+    <p style="text-align: center; color: #7f8c8d;">Consulta contratistas y trabajadores autorizados por apartamento.</p>
+
+    <form method="GET" action="" class="search-box">
+        <input type="text" name="q" placeholder="Buscar por nombre, documento o apartamento..." value="{{ query }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if resultados %}
+        
+            <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cédula</th>
+                    <th>Apto. / Destino</th>
+                    <th>Vence Autorización</th> <!-- NUEVA COLUMNA -->
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in resultados %}
+                    <tr>
+                        <td><strong>{{ e.nombre }}</strong></td>
+                        <td>{{ e.cedula }}</td>
+                        <td>{{ e.apartamento_responsable }}</td>
+                        <td>{{ e.fecha_fin }}</td> <!-- NUEVO CAMPO: Muestra la fecha de finalización -->
+                        <td>
+                            {% if e.activo %}
+                                <span class="badge-activo">AUTORIZADO</span>
+                            {% else %}
+                                <span class="badge-inactivo">INACTIVO</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    {% else %}
+        <p class="no-results">❌ No se encontró ningún trabajador registrado con esa consulta.</p>
+    {% endif %}
+</div>
+ 
+</body>
+</html>

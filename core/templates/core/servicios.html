@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios y Profesionales - Mi Conjunto</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .nav-back { display: inline-block; margin-bottom: 15px; color: #3498db; text-decoration: none; font-weight: bold; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 25px; }
+        .search-box input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .search-box button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .grid-servicios { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .card-servicio { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; background: #fafafa; }
+        .card-servicio h3 { margin-top: 0; color: #2c3e50; font-size: 1.1em; }
+        .badge { display: inline-block; padding: 3px 8px; font-size: 0.8em; background: #e1f5fe; color: #0288d1; border-radius: 4px; margin-bottom: 10px; font-weight: bold; }
+        .info { font-size: 0.9em; color: #555; margin: 5px 0; }
+        .no-results { text-align: center; color: #7f8c8d; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="{% url 'inicio' %}" class="nav-back">⬅ Volver al Inicio</a>
+    <h1>👨‍⚕️ Directorio de Servicios y Profesionales</h1>
+    <p style="text-align: center; color: #7f8c8d;">Servicios de vecinos disponibles dentro del conjunto residencial.</p>
+
+    <form method="GET" action="{% url 'servicios' %}" class="search-box">
+        <input type="text" name="q" value="{{ query }}" placeholder="Buscar por servicio (ej. Médico, Abogado, Electricista)...">
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if servicios %}
+        <div class="grid-servicios">
+            {% for s in servicios %}
+                <div class="card-servicio">
+                    <span class="badge">{{ s.get_categoria_display }}</span>
+                    <h3>{{ s.profesion_o_servicio }}</h3>
+                    <p class="info"><strong>Nombre:</strong> {{ s.nombre_profesional }}</p>
+                    <p class="info"><strong>Apto:</strong> {{ s.apartamento }}</p>
+                    <p class="info">
+                        <strong>Teléfono:</strong> 
+                        <a href="https://wa.me/{{ s.telefono_contacto }}?text=Hola%20{{ s.nombre_profesional }},%20vi%20su%20servicio%20de%20{{ s.profesion_o_servicio }}%20en%20el%20directorio%20del%20conjunto%20y%20deseo%20más%20información." 
+                        target="_blank" 
+                        style="background-color: #25d366; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.9em; display: inline-block; margin-top: 4px;">
+                         💬 WhatsApp: {{ s.telefono_contacto }}
+                    </a>
+                    </p>
+                    {% if s.descripcion %}
+                        <p class="info" style="margin-top:8px; font-style: italic;">{{ s.descripcion }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-results">📭 No se encontraron servicios disponibles o registrados.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
