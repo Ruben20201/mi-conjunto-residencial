@@ -2,7 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+import os
+import django
 
 def main():
     """Run administrative tasks."""
@@ -20,3 +21,13 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mi_conjunto.settings')
+django.setup()
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+if not User.objects.filter(username='admin').exists():
+    User.objects.create_superuser('admin', 'admin@example.com', 'admin1234')
+    print("Superusuario creado exitosamente.")

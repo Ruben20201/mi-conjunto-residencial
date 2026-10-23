@@ -16,3 +16,5 @@ COPY . .
 CMD ["gunicorn", "mi_conjunto.wsgi:application", "--bind", "0.0.0.0:8000"]
 
 CMD python manage.py migrate && gunicorn mi_conjunto.wsgi:application --bind 0.0.0.0:8000
+
+CMD python manage.py migrate && python create_admin.py && gunicorn mi_conjunto.wsgi:application --bind 0.0.0.0:8000
