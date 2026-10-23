@@ -27,9 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'mi-conjunto-residencial.onrender.com',
-    '.onrender.com', # Esto permite cualquier subdominio en Render automáticamente
+    '.onrender.com',
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    '*',  # Puedes dejar asterisco temporalmente para asegurarte de que abra
 ]
 
 INSTALLED_APPS = [
