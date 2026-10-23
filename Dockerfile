@@ -14,3 +14,5 @@ COPY . .
 
 # Comando para iniciar la aplicación
 CMD ["gunicorn", "mi_conjunto.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+CMD python manage.py migrate && gunicorn mi_conjunto.wsgi:application --bind 0.0.0.0:8000
