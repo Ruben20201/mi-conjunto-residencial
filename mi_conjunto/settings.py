@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'mi_conjunto.wsgi.application'
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 if os.environ.get('DATABASE_URL'):
-    # Configuración para Render (Servidor)
+    # Configuración exclusiva para Render (Nube)
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),
@@ -86,13 +86,13 @@ if os.environ.get('DATABASE_URL'):
         )
     }
 else:
-    # Configuración local (Tu computadora)
+    # Configuración local (Tu computadora) - Usa esto para evitar errores de codificación local
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'bd_residencial',
             'USER': 'postgres',
-            'PASSWORD': '123',
+            'PASSWORD': '12345',  # Asegúrate de que sea tu contraseña local exacta
             'HOST': 'localhost',
             'PORT': '5432',
         }
