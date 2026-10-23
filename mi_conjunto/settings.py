@@ -25,10 +25,12 @@ SECRET_KEY = 'django-insecure-y6c*2&m_prm!vdi@3wiku&5-y*1+$_n1_o2+v0988q-==s0py^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
-# Application definition
+ALLOWED_HOSTS = [
+    'mi-conjunto-residencial.onrender.com',
+    '.onrender.com', # Esto permite cualquier subdominio en Render automáticamente
+    'localhost',
+    '127.0.0.1'
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
